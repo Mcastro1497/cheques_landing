@@ -66,7 +66,7 @@ export default function Calculator() {
           <Field label="Comisión LB Finanzas (TNA)">
             <div className="relative">
               <div className={inputCls(false) + " pr-6 bg-slate-50 text-slate-700"}>
-                {COMISION_LB.toLocaleString("es-AR")}
+                {COMISION_LB}
               </div>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-slate-400">%</span>
             </div>
