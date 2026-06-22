@@ -64,9 +64,11 @@ export default function Calculator() {
           </Field>
 
           <Field label="Comisión LB Finanzas (TNA)">
-            <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm">
-              <span className="tabular-nums font-medium text-slate-700">{COMISION_LB.toLocaleString("es-AR")}%</span>
-              <span className="text-xs text-slate-400">fija</span>
+            <div className="relative">
+              <div className={inputCls(false) + " pr-6 bg-slate-50 text-slate-700"}>
+                {COMISION_LB.toLocaleString("es-AR")}
+              </div>
+              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-slate-400">%</span>
             </div>
           </Field>
 
