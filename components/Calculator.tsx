@@ -6,23 +6,23 @@ import { formatARS, formatMilesInput, parseMilesInput } from "@/lib/format";
 import { Field, PercentInput, ResultRow, Toggle, inputCls } from "./ui";
 import { usePlazo } from "./usePlazo";
 
+/** Comisión LB Finanzas fija. */
+const COMISION_LB = 1.5;
+
 export default function Calculator() {
   const { plazoDias, valido: plazoValido, field: plazoField } = usePlazo();
   const [montoStr, setMontoStr] = useState("10.000.000");
   const [tasa, setTasa] = useState("22");
-  const [comLB, setComLB] = useState("3");
   const [comSGR, setComSGR] = useState("1");
   const [exento, setExento] = useState(true);
 
   const montoNum = parseMilesInput(montoStr);
   const tasaNum = Number(tasa);
-  const lbNum = Number(comLB);
   const sgrNum = Number(comSGR);
 
   const errors = {
     monto: montoStr !== "" && montoNum <= 0,
     tasa: tasa !== "" && (!Number.isFinite(tasaNum) || tasaNum < 0),
-    lb: comLB !== "" && (!Number.isFinite(lbNum) || lbNum < 0),
     sgr: comSGR !== "" && (!Number.isFinite(sgrNum) || sgrNum < 0),
   };
 
@@ -30,22 +30,21 @@ export default function Calculator() {
     plazoValido &&
     montoNum > 0 &&
     Number.isFinite(tasaNum) && tasaNum >= 0 &&
-    Number.isFinite(lbNum) && lbNum >= 0 &&
     Number.isFinite(sgrNum) && sgrNum >= 0;
 
   const result = useMemo(() => {
     if (!inputsValidos) return null;
-    return calcular({ plazoDias, monto: montoNum, tasaTNA: tasaNum, comisionLBTNA: lbNum, comisionSGRTNA: sgrNum, exento });
-  }, [inputsValidos, plazoDias, montoNum, tasaNum, lbNum, sgrNum, exento]);
+    return calcular({ plazoDias, monto: montoNum, tasaTNA: tasaNum, comisionLBTNA: COMISION_LB, comisionSGRTNA: sgrNum, exento });
+  }, [inputsValidos, plazoDias, montoNum, tasaNum, sgrNum, exento]);
 
   return (
     <div className="grid gap-6 md:grid-cols-[1fr_1.4fr]">
       {/* Formulario */}
       <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-        <h2 className="mb-5 text-sm font-semibold uppercase tracking-wide text-slate-500">Datos del eCheq</h2>
+        <h2 className="mb-5 text-sm font-semibold uppercase tracking-wide text-slate-500">Datos del Echeq</h2>
 
         <div className="space-y-5">
-          <Field label="Monto del eCheq" error={errors.monto ? "El monto debe ser mayor a 0." : undefined}>
+          <Field label="Monto del Echeq" error={errors.monto ? "El monto debe ser mayor a 0." : undefined}>
             <div className="relative">
               <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">$</span>
               <input
@@ -64,8 +63,11 @@ export default function Calculator() {
             <PercentInput value={tasa} onChange={setTasa} error={errors.tasa} placeholder="22" />
           </Field>
 
-          <Field label="Comisión LB Finanzas (TNA)" error={errors.lb ? "Inválida." : undefined}>
-            <PercentInput value={comLB} onChange={setComLB} error={errors.lb} placeholder="3" />
+          <Field label="Comisión LB Finanzas (TNA)">
+            <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm">
+              <span className="tabular-nums font-medium text-slate-700">{COMISION_LB.toLocaleString("es-AR")}%</span>
+              <span className="text-xs text-slate-400">fija</span>
+            </div>
           </Field>
 
           <Field label="Comisión SGR (TNA)" error={errors.sgr ? "Inválida." : undefined}>
