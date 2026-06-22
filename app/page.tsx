@@ -1,4 +1,5 @@
 import Calculator from "@/components/Calculator";
+import Faq from "@/components/Faq";
 import { LbLogo } from "@/components/Logo";
 
 const WHATSAPP = "https://wa.me/5493413481637";
@@ -60,6 +61,8 @@ export default function Home() {
       </ul>
 
       <Calculator />
+
+      <Faq />
 
       {/* CTAs */}
       <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
