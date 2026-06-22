@@ -2,6 +2,7 @@ import Calculator from "@/components/Calculator";
 import { LbLogo } from "@/components/Logo";
 
 const WHATSAPP = "https://wa.me/5493413481637";
+const AGENDA = "https://meetings.hubspot.com/manuelcastro/asesoria-lb-finanzas";
 
 const VALORES = [
   { titulo: "Tasas competitivas", detalle: "Mejores condiciones que las alternativas tradicionales." },
@@ -63,7 +64,7 @@ export default function Home() {
       {/* CTAs */}
       <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <a
-          href={WHATSAPP}
+          href={AGENDA}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-violeta px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-violeta-comp sm:w-auto"
