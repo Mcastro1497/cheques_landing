@@ -3,7 +3,7 @@ import { LbLogo } from "@/components/Logo";
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-5xl px-4 py-10 sm:py-14">
+    <main className="mx-auto max-w-3xl px-4 py-10 sm:py-14">
       <header className="mb-8">
         <LbLogo className="h-8 w-auto text-violeta" />
         <h1 className="mt-3 text-2xl font-bold tracking-tight text-tinta sm:text-3xl">
