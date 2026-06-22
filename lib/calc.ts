@@ -41,8 +41,8 @@ export interface CalcResult {
   ivaDdmm: number;
   ddmmConIva: number;
   clienteRecibe: number;
-  /** Costo Financiero Total Efectivo Anual (sobre el neto recibido). */
-  cftea: number | null;
+  /** Costo Financiero Total, expresado como TNA (nominal anual, base 365). */
+  cftTNA: number | null;
 }
 
 export function calcular({
@@ -71,11 +71,12 @@ export function calcular({
   const clienteRecibe =
     montoDescontado - comisionTotal - ivaComision - iibb - ddmmConIva - iva;
 
-  // CFTEA: el cliente recibe `clienteRecibe` hoy y devuelve `monto` al vencimiento.
-  const cftea =
-    clienteRecibe > 0 && plazoDias > 0 ? Math.pow(monto / clienteRecibe, BASE_DIAS / plazoDias) - 1 : null;
+  // CFT (TNA): el cliente recibe `clienteRecibe` hoy y devuelve `monto` al vencimiento.
+  // Costo del período anualizado en forma nominal (sin capitalizar), base 365.
+  const cftTNA =
+    clienteRecibe > 0 && plazoDias > 0 ? (monto / clienteRecibe - 1) * (BASE_DIAS / plazoDias) : null;
 
-  return { montoDescontado, interes, comisionLB, comisionSGR, comisionTotal, ivaComision, iva, iibb, ddmm, ivaDdmm, ddmmConIva, clienteRecibe, cftea };
+  return { montoDescontado, interes, comisionLB, comisionSGR, comisionTotal, ivaComision, iva, iibb, ddmm, ivaDdmm, ddmmConIva, clienteRecibe, cftTNA };
 }
 
 export interface PagareInputs {
