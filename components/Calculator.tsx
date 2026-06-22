@@ -103,6 +103,11 @@ export default function Calculator() {
               <p className="mt-1 whitespace-nowrap text-2xl font-bold tabular-nums text-white sm:text-3xl">
                 {formatARS(result.clienteRecibe)}
               </p>
+              {result.cftea !== null && (
+                <p className="mt-2 text-sm font-medium tabular-nums text-lavanda">
+                  CFTEA: {(result.cftea * 100).toLocaleString("es-AR", { maximumFractionDigits: 2 })}%
+                </p>
+              )}
             </div>
           </div>
         ) : (
